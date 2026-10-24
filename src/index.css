@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+/* Skilloo design tokens — usable as Tailwind classes (bg-night, text-brand, font-display…) */
+@theme {
+  /* Light Skilloo identity: cream page, white clay cards, logo navy text, logo orange actions */
+  --color-night: #FAF7F2;      /* page background (cream of the Skilloo brand sheet) */
+  --color-panel: #FFFFFF;      /* cards */
+  --color-surface: #F3EEE6;    /* insets, tracks */
+  --color-raised: #EAE3D8;
+  --color-line: #E3DACC;
+  --color-ink: #082553;        /* logo navy */
+  --color-ink-muted: #4F5D78;
+  --color-brand: #FA7C0C;      /* logo orange: fills, bars, buttons (navy text on top) */
+  --color-brand-ink: #A64B07;  /* orange for text on light backgrounds (4.5:1) */
+  --color-brand-navy: #082553;
+  --color-accent: #2F6FE0;
+  --color-demo: #7C4DDB;       /* demo mode only */
+  --color-ok: #0F8A57;
+  --color-danger: #D93448;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-display: "Nunito", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    background-color: var(--color-night);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-brand-navy);
+    outline-offset: 2px;
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  /* clay "soft press" feedback */
+  button:active:not(:disabled) {
+    scale: 0.97;
+  }
+  button {
+    transition: scale 120ms ease-out, background-color 150ms, border-color 150ms, color 150ms;
+  }
+}
+
+/* Nunito headings need extra weight to read as rounded/chunky */
+.font-display.font-bold { font-weight: 800; }
+
+/* Claymorphism card: soft double shadow + inner highlight, large radius */
+.panel {
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 1.5rem;
+  box-shadow:
+    inset 0 -3px 0 rgb(8 37 83 / 0.04),
+    0 2px 0 rgb(8 37 83 / 0.05),
+    0 12px 28px -16px rgb(8 37 83 / 0.25);
+}
+.panel-glow {
+  box-shadow: 0 0 0 2px rgb(250 124 12 / 0.35), 0 12px 28px -14px rgb(250 124 12 / 0.45);
+}
+
+/* City ground: subtle blueprint grid */
+.city-ground {
+  background-color: #071B3D;
+  background-image:
+    radial-gradient(ellipse at 50% 40%, rgb(91 155 255 / 0.12), transparent 65%),
+    linear-gradient(rgb(91 155 255 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(91 155 255 / 0.07) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-toast { animation: toast-in 180ms ease-out; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--color-night); }
+::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #C9BCA8; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print only the certificate */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body { background: #fff; }
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area {
+    position: absolute; inset: 0; margin: 0;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+}

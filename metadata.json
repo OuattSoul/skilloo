@@ -1,0 +1,8 @@
+{
+  "name": "Skilloo — Apprendre aujourd'hui, réussir demain",
+  "description": "Plateforme d'apprentissage gamifiée où chaque module terminé fait grandir ta ville virtuelle (parcours Blockchain & Web3).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
